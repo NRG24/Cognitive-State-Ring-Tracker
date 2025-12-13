@@ -10,6 +10,4 @@ Bill of Materials:
 https://docs.google.com/spreadsheets/d/1M4TGVIU_XtcH1ejhJ6mys-NpG31-dXWfCi7Ya9xVGhs/edit?usp=sharing
 
 
-
-
-<img width="1137" height="611" alt="Screenshot 2025-12-12 at 8 37 03 AM" src="https://github.com/user-attachments/assets/70428709-46ce-4bbd-ac7e-243d33824a93" />
+<img width="852" height="432" alt="Screenshot 2025-12-12 at 11 38 10 PM" src="https://github.com/user-attachments/assets/3e590c1b-528f-4147-ade6-f91b583a9231" />
