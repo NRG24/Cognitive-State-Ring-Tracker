@@ -8,5 +8,4 @@ My PCB and Schematic are in the Split Ring folder.
 <img width="795" height="423" alt="Screenshot 2026-01-06 at 12 37 14 PM" src="https://github.com/user-attachments/assets/9eccdecf-2001-4705-b264-248e9f64f14d" />
 
 <img width="380" height="435" alt="Screenshot 2026-01-06 at 12 13 58 PM" src="https://github.com/user-attachments/assets/e46cc063-5446-4d6e-97bd-e6fb506012dc" />
-<img width="305" height="354" alt="Screenshot 2026-01-06 at 12 14 04 PM" src="https://github.com/user-attachments/assets/9c35dfe5-4c0c-4184-b900-8f5e1ad9a757" />
-<img width="860" height="544" alt="Screenshot 2026-01-06 at 12 14 09 PM" src="https://github.com/user-attachments/assets/baad2086-63c9-48f9-b7e0-16869e23e1fb" />
+
