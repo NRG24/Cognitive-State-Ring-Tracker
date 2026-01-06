@@ -2,10 +2,11 @@ This is a sensor packed device that features a GSR sensor and max30102 sensor th
 
 In this GitHub, I have the PCB, Schematic, and all of the KiCad data, the Flutter app code, the code for the MCU, the 3D CAD Model, and the Bill of Materials Link Below.
 
+My PCB and Schematic are in the Split Ring folder.
 
-<img width="852" height="432" alt="Screenshot 2025-12-12 at 11 38 10 PM" src="https://github.com/user-attachments/assets/3e590c1b-528f-4147-ade6-f91b583a9231" />
 
-Here are pictures of my PCB:
+<img width="795" height="423" alt="Screenshot 2026-01-06 at 12 37 14 PM" src="https://github.com/user-attachments/assets/9eccdecf-2001-4705-b264-248e9f64f14d" />
 
-<img width="807" height="701" alt="Screenshot 2025-12-13 at 11 49 00 AM" src="https://github.com/user-attachments/assets/746d098b-2ffa-4a75-8c62-d2e36283b3f3" />
-<img width="549" height="395" alt="Screenshot 2025-12-13 at 11 50 08 AM" src="https://github.com/user-attachments/assets/0b39c7f4-953d-454a-91fd-9111fd6d3f08" />
+<img width="380" height="435" alt="Screenshot 2026-01-06 at 12 13 58 PM" src="https://github.com/user-attachments/assets/e46cc063-5446-4d6e-97bd-e6fb506012dc" />
+<img width="305" height="354" alt="Screenshot 2026-01-06 at 12 14 04 PM" src="https://github.com/user-attachments/assets/9c35dfe5-4c0c-4184-b900-8f5e1ad9a757" />
+<img width="860" height="544" alt="Screenshot 2026-01-06 at 12 14 09 PM" src="https://github.com/user-attachments/assets/baad2086-63c9-48f9-b7e0-16869e23e1fb" />
