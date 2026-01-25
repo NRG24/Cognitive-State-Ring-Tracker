@@ -1,0 +1,104 @@
+{
+  "fpcStiffeners": [
+    {
+      "id": "e3538",
+      "gerber": "Gerber_TopStiffenerLayer_pit_0.2.GTSL",
+      "layer": "top",
+      "material": "pi",
+      "thickness": "0.2",
+      "path": [
+        [
+          [
+            "R",
+            1715,
+            1575,
+            760,
+            525,
+            0,
+            0
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "e3539",
+      "gerber": "Gerber_TopStiffenerLayer_pit_0.2.GTSL",
+      "layer": "top",
+      "material": "pi",
+      "thickness": "0.2",
+      "path": [
+        [
+          [
+            "R",
+            2495,
+            1480,
+            130,
+            170,
+            0,
+            0
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "e3541",
+      "gerber": "Gerber_TopStiffenerLayer_pit_0.2.GTSL",
+      "layer": "top",
+      "material": "pi",
+      "thickness": "0.2",
+      "path": [
+        [
+          [
+            "R",
+            2505,
+            1265,
+            120,
+            175,
+            0,
+            0
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "e3542",
+      "gerber": "Gerber_TopStiffenerLayer_pit_0.2.GTSL",
+      "layer": "top",
+      "material": "pi",
+      "thickness": "0.2",
+      "path": [
+        [
+          [
+            "R",
+            2987.9294,
+            1570,
+            457.0706,
+            520,
+            0,
+            0
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "e3543",
+      "gerber": "Gerber_TopStiffenerLayer_pit_0.2.GTSL",
+      "layer": "top",
+      "material": "pi",
+      "thickness": "0.2",
+      "path": [
+        [
+          [
+            "R",
+            3765,
+            1580,
+            430,
+            530,
+            0,
+            0
+          ]
+        ]
+      ]
+    }
+  ]
+}
