@@ -1,9 +1,13 @@
 This is a sensor packed device that features a GSR sensor and max30102 sensor that measure skin electrical conductivity (arousal), temperature, spo2, heart rate, HRV, and an accelerometer for filtering. The point of this is to build a tracker that isn't focused on fitness, but cognitive health tied to the nervous system. These sensors will be packed into a small flex PCB in a ring shape.. All of the circuitry has been tested in LT-Spice to ensure electrical correctness. The key point of this project is to have this ring focused on mental and cognitive health rather than fitness and physical health. So, the sensors send data to the Raytac nRF52840 module and the Raytac sends it to a mobile device via BLE. The data goes through a filter in the app, removing any outliers. Additionally, in the app there is a "Cognitive Score." The app interprets all the data and based off of an algorithm, it can give you a score out of 100 as well as some insights.
 
-In this GitHub, I have the PCB, Schematic, and all of the KiCad data, the Flutter app code, the code for the MCU, the 3D CAD Model, and the Bill of Materials Link Below.
+I made this project because I like biomedical devices and especially ones that can track and analyze your sympathetic, parasympathetic, and autonomic nervous system. Many smart wearables like smart rings have the PPG (heart rate sensor) but they don't have the crucial GSR sensor. 
 
-<img width="864" height="612" alt="Screenshot 2026-01-24 at 11 11 21 PM" src="https://github.com/user-attachments/assets/7879b4dc-c5ab-473a-8045-d4015adbab2c" />
-<img width="1084" height="406" alt="Screenshot 2026-01-24 at 11 11 37 PM" src="https://github.com/user-attachments/assets/25264fb5-25fe-4dbe-ba53-a23d3237ebc3" />
+To use this project, when everything is assembled and firmware is updated, the user opens the app, connects to the device and lets the tracking run throughout the day. Or, they can do short sessions of tracking. 
+
+In this GitHub, I have the PCB, Schematic, and all of the KiCad data, the Flutter app code, the code for the MCU, the 3D CAD Model, and the Bill of Materials Link Below.
 <img width="419" height="452" alt="Screenshot 2026-01-26 at 3 02 46 PM" src="https://github.com/user-attachments/assets/2cf5fb09-20a4-4d37-bc07-00bed0e458a8" />
 I could not get the flex PCB to actually flex or bend into a circular shape, so the green represents the flex PCB with proper dimensions. But I also included the important components (PPG sensor) in the respective location.
+<img width="864" height="612" alt="Screenshot 2026-01-24 at 11 11 21 PM" src="https://github.com/user-attachments/assets/7879b4dc-c5ab-473a-8045-d4015adbab2c" />
+<img width="1084" height="406" alt="Screenshot 2026-01-24 at 11 11 37 PM" src="https://github.com/user-attachments/assets/25264fb5-25fe-4dbe-ba53-a23d3237ebc3" />
 <img width="1165" height="605" alt="Screenshot 2026-01-26 at 3 05 09 PM" src="https://github.com/user-attachments/assets/06eb6955-13c5-45c2-9da7-03a3fe81a2aa" />
+<img width="782" height="559" alt="Screenshot 2026-01-26 at 4 04 11 PM" src="https://github.com/user-attachments/assets/2f345a7a-1446-4251-8ff1-f1bb022085d0" />
