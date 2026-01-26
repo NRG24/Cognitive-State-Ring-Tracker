@@ -5,3 +5,4 @@ In this GitHub, I have the PCB, Schematic, and all of the KiCad data, the Flutte
 <img width="864" height="612" alt="Screenshot 2026-01-24 at 11 11 21 PM" src="https://github.com/user-attachments/assets/7879b4dc-c5ab-473a-8045-d4015adbab2c" />
 <img width="1084" height="406" alt="Screenshot 2026-01-24 at 11 11 37 PM" src="https://github.com/user-attachments/assets/25264fb5-25fe-4dbe-ba53-a23d3237ebc3" />
 <img width="419" height="452" alt="Screenshot 2026-01-26 at 3 02 46 PM" src="https://github.com/user-attachments/assets/2cf5fb09-20a4-4d37-bc07-00bed0e458a8" />
+<img width="1165" height="605" alt="Screenshot 2026-01-26 at 3 05 09 PM" src="https://github.com/user-attachments/assets/06eb6955-13c5-45c2-9da7-03a3fe81a2aa" />
