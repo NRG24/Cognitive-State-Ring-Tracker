@@ -4,7 +4,6 @@ I made this project because I like biomedical devices and especially ones that c
 
 To use this project, when everything is assembled and firmware is updated, the user opens the app, connects to the device and lets the tracking run throughout the day. Or, they can do short sessions of tracking. 
 
-In this GitHub, I have the PCB, Schematic, and all of the KiCad data, the Flutter app code, the code for the MCU, the 3D CAD Model, and the Bill of Materials Link Below.
 <img width="419" height="452" alt="Screenshot 2026-01-26 at 3 02 46 PM" src="https://github.com/user-attachments/assets/2cf5fb09-20a4-4d37-bc07-00bed0e458a8" />
 I could not get the flex PCB to actually flex or bend into a circular shape, so the green represents the flex PCB with proper dimensions. But I also included the important components (PPG sensor) in the respective location.
 <img width="864" height="612" alt="Screenshot 2026-01-24 at 11 11 21 PM" src="https://github.com/user-attachments/assets/7879b4dc-c5ab-473a-8045-d4015adbab2c" />
