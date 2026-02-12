@@ -14,5 +14,5 @@ I could not get the flex PCB to actually flex or bend into a circular shape, so 
 <img width="814" height="322" alt="Screenshot 2026-02-11 at 9 22 10 PM" src="https://github.com/user-attachments/assets/5abb5626-18e5-408b-b01f-d982503a8651" />
 <img width="813" height="266" alt="Screenshot 2026-02-11 at 9 22 20 PM" src="https://github.com/user-attachments/assets/b072e503-fc68-44b3-ba77-69d35abc0193" />
 
+<img width="1131" height="604" alt="Screenshot 2026-02-12 at 8 11 25 AM" src="https://github.com/user-attachments/assets/1e6ba1c0-7dd7-40d4-ac2a-463743cc90d1" />
 
-<img width="1053" height="605" alt="Screenshot 2026-02-11 at 9 19 21 PM" src="https://github.com/user-attachments/assets/a621d54b-706d-4ee0-a21a-667830a8ef0a" />
