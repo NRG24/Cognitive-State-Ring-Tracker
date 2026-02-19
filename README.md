@@ -4,6 +4,9 @@ I made this project because I like biomedical devices and especially ones that c
 
 To use this project, when everything is assembled and firmware is updated, the user opens the app, connects to the device and lets the tracking run throughout the day. Or, they can do short sessions of tracking. 
 
+NOTES ABOUT SHIPPING:
+JLCPCB only does Global Direct for orders under $99 to Canada. The next cheapest is DHL $17.
+
 <img width="489" height="422" alt="Screenshot 2026-02-07 at 7 46 40 PM" src="https://github.com/user-attachments/assets/4cca5557-c2f1-45cb-8358-3a0cf60e1aaf" />
 
 <img width="436" height="368" alt="Screenshot 2026-02-07 at 9 29 02 PM" src="https://github.com/user-attachments/assets/2e2c0f2e-898e-42cc-9a81-37765b89f813" />
