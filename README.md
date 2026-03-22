@@ -12,10 +12,8 @@ JLCPCB only does Global Direct for orders under $99 to Canada. The next cheapest
 <img width="436" height="368" alt="Screenshot 2026-02-07 at 9 29 02 PM" src="https://github.com/user-attachments/assets/2e2c0f2e-898e-42cc-9a81-37765b89f813" />
 <br>
 I could not get the flex PCB to actually flex or bend into a circular shape, so the green represents the flex PCB with proper dimensions. But I also included the important components (PPG sensor) in the respective location.
-<img width="974" height="394" alt="Screenshot 2026-02-11 at 9 21 10 PM" src="https://github.com/user-attachments/assets/2e7a1b97-1064-4dcb-b45c-9257aeabfafb" />
+<img width="1077" height="370" alt="Screenshot 2026-03-21 at 9 27 09 PM" src="https://github.com/user-attachments/assets/76b5d239-362e-46cb-b721-c6f8a9353247" />
 <img width="718" height="494" alt="Screenshot 2026-02-11 at 9 21 46 PM" src="https://github.com/user-attachments/assets/ed82f334-0ea8-4d68-94f6-a0611016e22b" />
-<img width="814" height="322" alt="Screenshot 2026-02-11 at 9 22 10 PM" src="https://github.com/user-attachments/assets/5abb5626-18e5-408b-b01f-d982503a8651" />
-<img width="813" height="266" alt="Screenshot 2026-02-11 at 9 22 20 PM" src="https://github.com/user-attachments/assets/b072e503-fc68-44b3-ba77-69d35abc0193" />
-
-<img width="1131" height="604" alt="Screenshot 2026-02-12 at 8 11 25 AM" src="https://github.com/user-attachments/assets/1e6ba1c0-7dd7-40d4-ac2a-463743cc90d1" />
+<img width="1101" height="417" alt="Screenshot 2026-03-21 at 9 28 39 PM" src="https://github.com/user-attachments/assets/bfdef878-dc1f-4e6c-975c-ed55c9a32da5" />
+<img width="1163" height="555" alt="Screenshot 2026-03-21 at 9 30 06 PM" src="https://github.com/user-attachments/assets/126d4b80-af4b-493e-b5fa-aa013f26baca" />
 
