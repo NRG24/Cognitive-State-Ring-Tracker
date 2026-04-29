@@ -6,6 +6,7 @@ To use this project, when everything is assembled and firmware is updated, the u
 
 NOTES ABOUT SHIPPING:
 JLCPCB only does Global Direct for orders under $99 to Canada. The next cheapest is DHL $17.
+<img width="1526" height="1260" alt="image" src="https://github.com/user-attachments/assets/9e2d3639-5bc1-4c2b-b5d9-fed1e8b23c1c" />
 
 <img width="1280" height="1024" alt="image" src="https://github.com/user-attachments/assets/bb193762-28db-4391-b3c4-8594ef432642" />
 
