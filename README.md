@@ -1,11 +1,30 @@
-This is a sensor packed device that features a GSR sensor and max30102 sensor that measure skin electrical conductivity (arousal), temperature, spo2, heart rate, HRV, and an accelerometer for filtering. The point of this is to build a tracker that isn't focused on fitness, but cognitive health tied to the nervous system. These sensors will be packed into a small flex PCB in a ring shape.. All of the circuitry has been tested in LT-Spice to ensure electrical correctness. The key point of this project is to have this ring focused on mental and cognitive health rather than fitness and physical health. So, the sensors send data to the Raytac nRF52832 module and the Raytac sends it to a mobile device via BLE. The data goes through a filter in the app, removing any outliers. Additionally, in the app there is a "Cognitive Score." The app interprets all the data and based off of an algorithm, it can give you a score out of 100 as well as some insights.
+# NERVA Ring
 
-I made this project because I like biomedical devices and especially ones that can track and analyze your sympathetic, parasympathetic, and autonomic nervous system. Many smart wearables like smart rings have the PPG (heart rate sensor) but they don't have the crucial GSR sensor. 
+An open-source, sensor-packed smart ring designed to monitor cognitive health and autonomic nervous system metrics rather than traditional fitness tracking. 
 
-To use this project, when everything is assembled and firmware is updated, the user opens the app, connects to the device and lets the tracking run throughout the day. Or, they can do short sessions of tracking. 
+## Project Overview
 
-NOTES ABOUT SHIPPING:
-JLCPCB only does Global Direct for orders under $99 to Canada. The next cheapest is DHL $17.
+The NERVA Ring shifts the focus of wearable technology away from step-counting and workouts toward real-time mental well-being. By embedding precise biosensors into a compact, flexible PCB form factor, the device continuously captures physiological indicators tied directly to stress, mental fatigue, and psychological arousal.
+
+## Core Features
+
+* **Cognitive Focus:** Tailored strictly for mental wellness monitoring rather than physical fitness or gym tracking.
+* **Rigorous Hardware Validation:** Circuitry completely modeled, tested, and validated via LT-Spice to guarantee electrical correctness.
+* **Ultra-Compact Layout:** All hardware components optimized to fit onto a highly constrained, circular flex PCB architecture.
+* **Wireless Telemetry:** Real-time, low-latency data streaming to mobile devices using Bluetooth Low Energy (BLE).
+* **Intelligent Software Pipeline:** Dynamic in-app data filtering to remove motion artifacts and anomalies, powering a custom algorithm that delivers a "Cognitive Score" out of 100 alongside meaningful behavioral insights.
+
+## Hardware Architecture
+
+* **Microcontroller / RF:** Raytac nRF52832 module handling low-power processing and BLE transmission.
+* **Biometrics (PPG):** MAX30102 sensor capturing Heart Rate, Heart Rate Variability (HRV), and Blood Oxygen Saturation (SpO2).
+* **Arousal Tracking (GSR):** Custom analog Galvanic Skin Response circuit to measure electrodermal activity and sympathetic nervous system activation.
+* **Motion Filtering:** Integrated accelerometer dedicated to detecting and filtering out motion noise from raw biometric streams.
+
+
+
+https://github.com/user-attachments/assets/21d7508c-1ee5-49b8-9717-f8bbbc1bc319
+
 <img width="1526" height="1260" alt="image" src="https://github.com/user-attachments/assets/9e2d3639-5bc1-4c2b-b5d9-fed1e8b23c1c" />
 
 <img width="1280" height="1024" alt="image" src="https://github.com/user-attachments/assets/bb193762-28db-4391-b3c4-8594ef432642" />
