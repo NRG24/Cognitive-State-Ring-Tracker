@@ -16,15 +16,17 @@ The NERVA Ring shifts the focus of wearable technology away from step-counting a
 
 ## Hardware Architecture
 
-* **Microcontroller / RF:** Raytac MDBT50Q-1MV2 (nRF52833) handling low-power processing and BLE transmission.
+* **Microcontroller / RF:** Raytac MDBT42V (nRF52832) handling low-power processing and BLE transmission.
 * **Biometrics (PPG):** MAX30102 sensor capturing Heart Rate, Heart Rate Variability (HRV), Blood Oxygen Saturation (SpO2), and die temperature.
 * **Arousal Tracking (GSR):** LM324-based quad op-amp Galvanic Skin Response circuit (Grove GSR-compatible topology) to measure electrodermal activity and sympathetic nervous system activation.
 * **Motion Filtering:** LSM6DSR 6-axis IMU (accelerometer + gyroscope) dedicated to detecting and filtering out motion noise from raw biometric streams.
 * **Power Regulation:** TLV70018DDCR ultra-low-noise 1.8V LDO regulator.
+* **GSR Electrodes:** Custom pogo-pin electrodes for skin contact.
+* **Charging:** Two-pin magnetic pogo charger connector (Alibaba).
 * **Battery:** Curved LiPo cell (ring-form-factor).
 * **PCB:** 2-layer flex PCB with components on both sides, 0402/0201 passives, manufactured and assembled by JLCPCB.
 
-> **Prototyping note:** The `firmware/` directory contains sketches for both the final ring hardware (MDBT50Q / nRF52833) and the Seeed XIAO nRF52840 development board used during prototyping. The XIAO-based sketches (e.g. `gsr_heart_ble.ino`) use an external DS18B20 temperature sensor and standalone pulse/GSR sensor modules, while the ring PCB integrates the MAX30102 and a custom analog GSR circuit directly.
+> **Prototyping note:** The `firmware/` directory contains sketches for both the final ring hardware (MDBT42V / nRF52832) and the Seeed XIAO nRF52840 development board used during prototyping. The XIAO-based sketches (e.g. `gsr_heart_ble.ino`) use an external DS18B20 temperature sensor and standalone pulse/GSR sensor modules, while the ring PCB integrates the MAX30102 and a custom analog GSR circuit directly.
 
 ## Project Structure
 
@@ -72,11 +74,13 @@ See [`hardware/BOM.md`](hardware/BOM.md) for the complete, formatted BOM. See [`
 
 | Component | Part | Package | Qty |
 |-----------|------|---------|-----|
-| MCU / BLE | Raytac MDBT50Q-1MV2 (nRF52833) | SMD Module | 1 |
+| MCU / BLE | Raytac MDBT42V (nRF52832) | SMD Module | 1 |
 | PPG Sensor | MAX30102EFD+T | OESIP-14 | 1 |
 | IMU | LSM6DSRTR (LSM6DSR) | LGA-14 | 1 |
 | GSR Op-Amp | LM324PWR | TSSOP-14 | 1 |
 | LDO Regulator | TLV70018DDCR | SOT-23-5 | 1 |
+| GSR Electrodes | Custom pogo pins | — | 2 |
+| Charger Connector | 2-pin magnetic pogo | — | 1 |
 | Battery | Curved ring-type LiPo | Custom | 1 |
 
 ## Sensors & Data Streams
@@ -94,16 +98,15 @@ See [`hardware/BOM.md`](hardware/BOM.md) for the complete, formatted BOM. See [`
 
 ## Known Documentation Inconsistencies
 
-Some older design documents still reference parts from earlier board revisions. The CSV BOM (`hardware/NERVA RING-bom.csv`) and this README reflect the **actual current PCB** as ordered from JLCPCB. Key differences from older docs:
+Some design documents still reference parts from earlier board revisions. This README reflects the actual current hardware. Key differences in older docs:
 
-| What | Older Docs Say | Actual (Current PCB) |
+| What | Stale Docs Say | Actual (Current PCB) |
 |------|----------------|----------------------|
-| MCU Module | MDBT42V-512KV2 (nRF52832) | MDBT50Q-1MV2 (nRF52833) |
 | IMU | LSM6DS3 | LSM6DSR (LSM6DSRTR) |
 | Op-Amp | TLV9004 (UQFN-14) | LM324PWR (TSSOP-14) |
 | LDO | MCP1700T-3302E (3.3V) | TLV70018DDCR (1.8V) |
 
-The `SCHEMATIC_CHECKLIST.md`, `PCB_LAYOUT_STRATEGY.md`, and `GSR_CIRCUIT_INTEGRATION.md` have not yet been updated to match the current BOM. The firmware docs in `firmware/gsr_heart_ble/` describe the XIAO nRF52840 prototyping setup, not the final ring hardware.
+The JLCPCB BOM CSV (`hardware/NERVA RING-bom.csv`) lists MDBT50Q-1MV2 for the MCU slot, but the actual module used is the **MDBT42V** (nRF52832). The `SCHEMATIC_CHECKLIST.md`, `PCB_LAYOUT_STRATEGY.md`, and `GSR_CIRCUIT_INTEGRATION.md` have not yet been fully updated. The firmware docs in `firmware/gsr_heart_ble/` describe the XIAO nRF52840 prototyping setup, not the final ring hardware.
 
 ## Getting Started
 

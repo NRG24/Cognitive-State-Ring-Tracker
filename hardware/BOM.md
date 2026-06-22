@@ -8,10 +8,8 @@
 |------|-------------|-----|------------|----------|
 | Curved LiPo Battery | Ring-type rechargeable Li-Ion cell for wearable devices | 5 | $27.00 | Alibaba |
 | Flex PCB + Assembly | 2-layer flex PCB with SMT assembly (all components except battery) | 2 | $160.60 | JLCPCB |
-| Raytac MDBT42V-P | MCU module pre-order for PCB assembly (earlier revision, see note below) | 2 | $11.06 | JLCPCB Pre-Order |
+| Raytac MDBT42V-P | BLE MCU module (nRF52832), pre-order for PCB assembly | 2 | $11.06 | JLCPCB Pre-Order |
 | | **Total** | | **$198.66** | |
-
-> **Note on MCU:** The MDBT42V-P was pre-ordered separately, but the PCBA parts list below shows the **MDBT50Q-1MV2** as the module actually placed on the board. The design evolved from nRF52832 (MDBT42V) to nRF52833 (MDBT50Q) during development.
 
 ## PCBA Parts List
 
@@ -21,7 +19,7 @@ Components placed by JLCPCB assembly service.
 
 | Ref | Part Number | Description | Package | Qty | Manufacturer | LCSC | Unit Price |
 |-----|-------------|-------------|---------|-----|-------------|------|------------|
-| U10 | MDBT50Q-1MV2 | BLE MCU module (nRF52833) | SMD Module | 1 | Raytac | C5118826 | $1.02 |
+| U10 | MDBT42V-512KV2 | BLE MCU module (nRF52832) | SMD Module | 1 | Raytac | C5118826 | $1.02 |
 | U1 | MAX30102EFD+T | PPG sensor (HR, SpO2, temp) | OESIP-14 (5.6x3.3mm) | 1 | Analog Devices / Maxim | C6454833 | $1.79 |
 | U4 | LSM6DSRTR | 6-axis IMU (accel + gyro) | LGA-14 (3.0x2.5mm) | 1 | STMicroelectronics | C784817 | $0.41 |
 | U5 | LM324PWR | Quad op-amp (GSR circuit) | TSSOP-14 (5.0x4.4mm) | 1 | Texas Instruments | C7942 | $0.03 |
@@ -62,11 +60,13 @@ Components placed by JLCPCB assembly service.
 
 **Total inductors: 1**
 
-### Connectors & Test Points
+### Connectors, Electrodes & Test Points
 
 | Ref | Part | Designators | Qty | Notes |
 |-----|------|-------------|-----|-------|
 | H4 | PZ254V-11-02P | H4 | 1 | 2-pin header (battery connector), LCSC C492401 |
+| — | Custom pogo pins | GSR+, GSR- | 2 | GSR skin-contact electrodes |
+| — | 2-pin magnetic pogo connector | CHRG | 1 | Magnetic charging connector (Alibaba) |
 | BAT+, BAT- | Test-Point | BAT+, BAT- | 2 | Battery connection test points (2mm) |
 | TP_VDD | Test-Point | TP_VDD | 1 | Power rail test point (0.5mm) |
 
@@ -78,21 +78,20 @@ Components placed by JLCPCB assembly service.
 | Capacitors | 18 |
 | Resistors | 14 |
 | Inductors | 1 |
-| Connectors | 1 |
+| Connectors | 3 |
 | Test Points | 3 |
-| **Total** | **42** |
+| **Total** | **44** |
 
 ## Discrepancies With Other Documentation
 
-The following hardware docs reference parts from earlier board revisions and have not been updated:
+The JLCPCB BOM CSV lists MDBT50Q-1MV2 for the MCU slot, but the actual module used is the **MDBT42V** (nRF52832). The following docs have other stale references:
 
 | Document | References | Actual Part on PCB |
 |----------|------------|--------------------|
-| `SCHEMATIC_CHECKLIST.md` | MDBT42V (nRF52832) | MDBT50Q-1MV2 (nRF52833) |
 | `SCHEMATIC_CHECKLIST.md` | LSM6DS3 | LSM6DSR (LSM6DSRTR) |
 | `SCHEMATIC_CHECKLIST.md` | MCP1700T-3302E (3.3V LDO) | TLV70018DDCR (1.8V LDO) |
 | `SCHEMATIC_CHECKLIST.md` | TLV9004 quad op-amp | LM324PWR |
-| `PCB_LAYOUT_STRATEGY.md` | MDBT42V-512KV2, TLV9004IRUCR, LSM6DS3, MCP1700T-3302E | See above |
+| `PCB_LAYOUT_STRATEGY.md` | TLV9004IRUCR, LSM6DS3, MCP1700T-3302E | See above |
 | `GSR_CIRCUIT_INTEGRATION.md` | TLV9004IRUCR (UQFN-14), 0201 passives | LM324PWR (TSSOP-14), 0402 passives |
 | `GSR_CIRCUIT_INTEGRATION.md` | RG1 = 100kΩ | RG1 = 4.7K (per CSV BOM) |
 | `GSR_CIRCUIT_INTEGRATION.md` | 100µF bulk cap (0603/0805) | No 100µF cap in BOM; largest is 10µF |
