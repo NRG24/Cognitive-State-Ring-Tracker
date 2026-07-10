@@ -112,10 +112,11 @@ The JLCPCB BOM CSV (`hardware/NERVA RING-bom.csv`) lists MDBT50Q-1MV2 for the MC
 
 ## Next Revision (In Progress)
 
-Work is underway on the next PCB revision, replacing the LM324-based GSR
-circuit with an OPA2333 transimpedance amplifier and adding a BQ25120A PMIC
-for charging and power sequencing. None of this has been fabricated yet —
-it's schematic-stage only. See:
+Work is underway on the next PCB revision: swapping the MCU from the Raytac
+MDBT42V (nRF52832) to a u-blox ANNA-B402 (nRF52833), replacing the LM324-based
+GSR circuit with an OPA2333 transimpedance amplifier, and adding a BQ25120A
+PMIC for charging and power sequencing. None of this has been fabricated yet
+— it's schematic-stage only. See:
 
 * [`hardware/SCHEMATIC_DECISIONS.md`](hardware/SCHEMATIC_DECISIONS.md) — locked schematic decisions for the GSR front end, power management, sensor interrupts, and I2C bus.
 * [`firmware/POWER_MANAGEMENT.md`](firmware/POWER_MANAGEMENT.md) — mandatory BQ25120A boot sequence and I2C watchdog servicing.
