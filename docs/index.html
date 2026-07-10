@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NERVA Ring — Cognitive health, on your finger</title>
+  <meta name="description" content="NERVA Ring is an open-source, sensor-packed smart ring that monitors cognitive health and autonomic nervous system metrics — stress, focus, and mental resilience — instead of steps." />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💍</text></svg>" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- ============ NAV ============ -->
+  <header class="nav" id="top">
+    <div class="wrap nav-inner">
+      <a class="brand" href="#top">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span>NERVA<span class="brand-thin">&nbsp;Ring</span></span>
+      </a>
+      <nav class="nav-links">
+        <a href="#features">Features</a>
+        <a href="#sensors">Sensors</a>
+        <a href="#score">Cognitive Score</a>
+        <a href="#hardware">Hardware</a>
+        <a href="#app">App</a>
+      </nav>
+      <a class="btn btn-ghost nav-cta" href="https://github.com/NRG24/NERVA_Ring" target="_blank" rel="noopener">GitHub ↗</a>
+    </div>
+  </header>
+
+  <!-- ============ HERO ============ -->
+  <section class="hero">
+    <div class="hero-glow" aria-hidden="true"></div>
+    <div class="wrap hero-inner">
+      <div class="hero-copy">
+        <span class="pill">Open-source neuro-wearable</span>
+        <h1>Your mind has metrics.<br /><span class="grad">Now you can read them.</span></h1>
+        <p class="lede">
+          NERVA is a sensor-packed smart ring built for <strong>cognitive health</strong>, not step counting.
+          It continuously reads the signals of your autonomic nervous system — stress, arousal, and mental
+          fatigue — and turns them into a single <strong>Cognitive Score</strong> you can actually act on.
+        </p>
+        <div class="hero-cta">
+          <a class="btn btn-primary" href="#features">Explore the tech</a>
+          <a class="btn btn-ghost" href="https://github.com/NRG24/NERVA_Ring" target="_blank" rel="noopener">View the project</a>
+        </div>
+        <div class="hero-stats">
+          <div><span class="stat-num">6</span><span class="stat-lbl">biometric streams</span></div>
+          <div><span class="stat-num">1.8V</span><span class="stat-lbl">ultra-low-noise rail</span></div>
+          <div><span class="stat-num">/100</span><span class="stat-lbl">Cognitive Score</span></div>
+        </div>
+      </div>
+
+      <!-- CSS/SVG ring visual -->
+      <div class="hero-visual" aria-hidden="true">
+        <div class="ring-scene">
+          <div class="ring-orbit"></div>
+          <div class="ring-core">
+            <svg viewBox="0 0 220 220" class="ring-svg">
+              <defs>
+                <linearGradient id="ringGrad" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0" stop-color="#7c5cff"/>
+                  <stop offset="0.5" stop-color="#38bdf8"/>
+                  <stop offset="1" stop-color="#22d3ee"/>
+                </linearGradient>
+              </defs>
+              <circle cx="110" cy="110" r="78" fill="none" stroke="url(#ringGrad)" stroke-width="26" />
+              <circle cx="110" cy="110" r="78" fill="none" stroke="#0b0f1a" stroke-width="26" stroke-dasharray="3 12" opacity="0.55" />
+            </svg>
+            <div class="ring-node n1" data-label="PPG"></div>
+            <div class="ring-node n2" data-label="GSR"></div>
+            <div class="ring-node n3" data-label="IMU"></div>
+            <div class="ring-node n4" data-label="BLE"></div>
+            <div class="ring-pulse"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ MARQUEE ============ -->
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee-track">
+      <span>Heart Rate</span><span>·</span><span>HRV / RMSSD</span><span>·</span><span>SpO₂</span><span>·</span>
+      <span>Galvanic Skin Response</span><span>·</span><span>Skin Temperature</span><span>·</span><span>Motion Artifact Filtering</span><span>·</span>
+      <span>Heart Rate</span><span>·</span><span>HRV / RMSSD</span><span>·</span><span>SpO₂</span><span>·</span>
+      <span>Galvanic Skin Response</span><span>·</span><span>Skin Temperature</span><span>·</span><span>Motion Artifact Filtering</span><span>·</span>
+    </div>
+  </div>
+
+  <!-- ============ FEATURES ============ -->
+  <section class="section" id="features">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Why NERVA</span>
+        <h2>Wellness wearables watch your body.<br />NERVA listens to your nervous system.</h2>
+      </div>
+      <div class="grid grid-3">
+        <article class="card">
+          <div class="card-ico ico-brain"></div>
+          <h3>Cognitive-first</h3>
+          <p>Tuned strictly for mental wellness — stress, arousal, and mental fatigue — instead of gym reps and step counts.</p>
+        </article>
+        <article class="card">
+          <div class="card-ico ico-wave"></div>
+          <h3>Clean signals</h3>
+          <p>A dedicated 6-axis IMU detects and filters motion noise from raw biometric streams before it ever reaches your score.</p>
+        </article>
+        <article class="card">
+          <div class="card-ico ico-chip"></div>
+          <h3>Validated hardware</h3>
+          <p>Every circuit modeled and verified in LT-Spice, then squeezed onto a circular 2-layer flex PCB assembled by JLCPCB.</p>
+        </article>
+        <article class="card">
+          <div class="card-ico ico-bolt"></div>
+          <h3>Real-time telemetry</h3>
+          <p>Low-latency Bluetooth Low Energy streams six live metrics straight to your phone with a tiny power budget.</p>
+        </article>
+        <article class="card">
+          <div class="card-ico ico-graph"></div>
+          <h3>Smart pipeline</h3>
+          <p>In-app filtering removes artifacts, then a custom algorithm distills everything into a Cognitive Score out of 100.</p>
+        </article>
+        <article class="card">
+          <div class="card-ico ico-open"></div>
+          <h3>Fully open</h3>
+          <p>Firmware, Flutter app, KiCad schematics, and the full bill of materials — all open-source and on GitHub.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SENSORS ============ -->
+  <section class="section section-alt" id="sensors">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Sensors &amp; data streams</span>
+        <h2>Six signals, streamed over one BLE service</h2>
+        <p class="section-sub">Each metric is exposed as its own GATT characteristic on service <code>19B10000-E8F2-537E-4F6C-D104768A1214</code>.</p>
+      </div>
+      <div class="table-wrap">
+        <table class="datatable">
+          <thead>
+            <tr><th>Metric</th><th>Source</th><th>UUID suffix</th><th>Type</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>GSR</strong> — skin conductance</td><td>Analog GSR circuit → ADC</td><td><code>…0002</code></td><td>Int</td></tr>
+            <tr><td><strong>Heart Rate</strong></td><td>MAX30102 PPG</td><td><code>…0003</code></td><td>Int</td></tr>
+            <tr><td><strong>Temperature</strong></td><td>MAX30102 die temp</td><td><code>…0004</code></td><td>Float</td></tr>
+            <tr><td><strong>HRV</strong> (RMSSD)</td><td>Derived from PPG</td><td><code>…0005</code></td><td>Float</td></tr>
+            <tr><td><strong>SpO₂</strong></td><td>MAX30102 PPG</td><td><code>…0006</code></td><td>Int</td></tr>
+            <tr><td><strong>Battery</strong></td><td>Voltage divider → ADC</td><td><code>…0007</code></td><td>Int</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ COGNITIVE SCORE ============ -->
+  <section class="section" id="score">
+    <div class="wrap split">
+      <div class="split-copy">
+        <span class="eyebrow">The Cognitive Score</span>
+        <h2>One number for how your mind is holding up</h2>
+        <p>
+          NERVA fuses your live biometrics into a single score out of 100. Under the hood the algorithm
+          weighs three qualities of your electrodermal signal — then layers in heart-rate variability
+          and context from the IMU.
+        </p>
+        <ul class="feature-list">
+          <li><span class="fl-key">Variability</span><span class="fl-val">40%</span><span class="fl-desc">moment-to-moment change in skin conductance</span></li>
+          <li><span class="fl-key">Trend</span><span class="fl-val">30%</span><span class="fl-desc">direction of arousal over the session</span></li>
+          <li><span class="fl-key">Stability</span><span class="fl-val">30%</span><span class="fl-desc">how steady your baseline stays</span></li>
+        </ul>
+        <p class="muted">Paired with activity recognition, stress-pattern detection, and trigger identification, the score becomes a picture of when — and why — your mind runs hot.</p>
+      </div>
+      <div class="split-visual">
+        <div class="scorecard">
+          <div class="score-ring">
+            <svg viewBox="0 0 160 160">
+              <circle cx="80" cy="80" r="66" class="score-track"/>
+              <circle cx="80" cy="80" r="66" class="score-fill"/>
+            </svg>
+            <div class="score-center">
+              <span class="score-value">82</span>
+              <span class="score-max">/100</span>
+            </div>
+          </div>
+          <p class="score-state">Engaged · Low stress</p>
+          <div class="mini-stats">
+            <div><span>HRV</span><b>68 ms</b></div>
+            <div><span>HR</span><b>71 bpm</b></div>
+            <div><span>GSR</span><b>Calm</b></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ HARDWARE ============ -->
+  <section class="section section-alt" id="hardware">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Hardware architecture</span>
+        <h2>A full biosensing lab on a circular flex PCB</h2>
+        <p class="section-sub">Components on both sides, 0402/0201 passives, manufactured and assembled by JLCPCB.</p>
+      </div>
+      <div class="grid grid-bom">
+        <div class="bom-item"><span class="bom-role">MCU / BLE</span><span class="bom-part">Raytac MDBT42V</span><span class="bom-sub">nRF52832 · low-power processing + BLE</span></div>
+        <div class="bom-item"><span class="bom-role">PPG sensor</span><span class="bom-part">MAX30102EFD+T</span><span class="bom-sub">HR · HRV · SpO₂ · die temp</span></div>
+        <div class="bom-item"><span class="bom-role">IMU</span><span class="bom-part">LSM6DSR</span><span class="bom-sub">6-axis · motion-artifact filtering</span></div>
+        <div class="bom-item"><span class="bom-role">GSR op-amp</span><span class="bom-part">LM324PWR</span><span class="bom-sub">quad op-amp · electrodermal activity</span></div>
+        <div class="bom-item"><span class="bom-role">LDO regulator</span><span class="bom-part">TLV70018DDCR</span><span class="bom-sub">ultra-low-noise 1.8V rail</span></div>
+        <div class="bom-item"><span class="bom-role">Electrodes</span><span class="bom-part">Custom pogo pins</span><span class="bom-sub">skin-contact GSR</span></div>
+        <div class="bom-item"><span class="bom-role">Charging</span><span class="bom-part">2-pin magnetic pogo</span><span class="bom-sub">snap-on charger</span></div>
+        <div class="bom-item"><span class="bom-role">Battery</span><span class="bom-part">Curved LiPo</span><span class="bom-sub">ring form-factor cell</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ APP ============ -->
+  <section class="section" id="app">
+    <div class="wrap split reverse">
+      <div class="split-copy">
+        <span class="eyebrow">The companion app</span>
+        <h2>A Flutter app that turns signals into insight</h2>
+        <p>Pair over BLE and NERVA's cross-platform app does the heavy lifting — filtering, scoring, and surfacing patterns you'd never spot on your own.</p>
+        <div class="chips">
+          <span class="chip">Live waveforms</span>
+          <span class="chip">Cognitive Score</span>
+          <span class="chip">Stress patterns</span>
+          <span class="chip">Activity recognition</span>
+          <span class="chip">Trigger identification</span>
+          <span class="chip">Haptic alerts</span>
+          <span class="chip">Trend history</span>
+          <span class="chip">Battery monitor</span>
+        </div>
+        <a class="btn btn-primary" href="https://github.com/NRG24/NERVA_Ring/tree/main/app" target="_blank" rel="noopener">Browse the app source ↗</a>
+      </div>
+      <div class="split-visual">
+        <div class="phone">
+          <div class="phone-notch"></div>
+          <div class="phone-screen">
+            <div class="app-top">
+              <span class="app-dot"></span> Connected · GSR Streamer
+            </div>
+            <div class="app-hero-score">
+              <span class="ahs-num">82</span>
+              <span class="ahs-lbl">Cognitive Score</span>
+            </div>
+            <div class="app-wave">
+              <svg viewBox="0 0 300 60" preserveAspectRatio="none">
+                <polyline class="wave-line" points="0,30 20,28 35,34 50,18 65,42 80,26 100,30 120,22 140,38 160,20 180,44 200,28 220,32 240,24 260,36 280,26 300,30"/>
+              </svg>
+            </div>
+            <div class="app-metrics">
+              <div class="am"><span>HR</span><b>71</b></div>
+              <div class="am"><span>HRV</span><b>68</b></div>
+              <div class="am"><span>SpO₂</span><b>98</b></div>
+              <div class="am"><span>Temp</span><b>34.1</b></div>
+            </div>
+            <div class="app-state">🧘 Engaged — nice and steady</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CTA ============ -->
+  <section class="cta-band">
+    <div class="wrap cta-inner">
+      <h2>Build it, fork it, or just read the schematics.</h2>
+      <p>Firmware, app, hardware, and docs are all open. Everything you need to understand — or rebuild — the NERVA Ring lives in one repo.</p>
+      <a class="btn btn-primary btn-lg" href="https://github.com/NRG24/NERVA_Ring" target="_blank" rel="noopener">Open the repository ↗</a>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="footer">
+    <div class="wrap footer-inner">
+      <div class="footer-brand">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span>NERVA<span class="brand-thin">&nbsp;Ring</span></span>
+        <p class="footer-tag">Open-source cognitive-health wearable.</p>
+      </div>
+      <div class="footer-cols">
+        <div>
+          <h4>Project</h4>
+          <a href="https://github.com/NRG24/NERVA_Ring" target="_blank" rel="noopener">Repository</a>
+          <a href="https://github.com/NRG24/NERVA_Ring/tree/main/hardware" target="_blank" rel="noopener">Hardware</a>
+          <a href="https://github.com/NRG24/NERVA_Ring/tree/main/firmware" target="_blank" rel="noopener">Firmware</a>
+          <a href="https://github.com/NRG24/NERVA_Ring/tree/main/app" target="_blank" rel="noopener">App</a>
+        </div>
+        <div>
+          <h4>Explore</h4>
+          <a href="#features">Features</a>
+          <a href="#sensors">Sensors</a>
+          <a href="#score">Cognitive Score</a>
+          <a href="#hardware">Hardware</a>
+        </div>
+      </div>
+    </div>
+    <div class="wrap footer-bottom">
+      <span>© <span id="year"></span> NERVA Ring · Open source</span>
+      <span class="footer-note">Not a medical device. For research &amp; wellness insight only.</span>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+    // subtle reveal on scroll
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.card, .bom-item, .section-head, .split-copy, .split-visual, .datatable, .chip').forEach(el => {
+      el.classList.add('reveal'); io.observe(el);
+    });
+  </script>
+</body>
+</html>
