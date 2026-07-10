@@ -48,10 +48,12 @@ NERVA_Ring/
 │   │   ├── gsr_heart_ble.ino   # BLE biometric streaming (XIAO prototype)
 │   │   └── *.ino              # Variant sketches (power-optimized, all-features, etc.)
 │   ├── simple_ble/             # Minimal BLE test
+│   ├── POWER_MANAGEMENT.md     # BQ25120A boot sequence & watchdog requirements
 │   └── *.ino                  # Standalone test sketches
 ├── hardware/                   # Hardware design files
 │   ├── NERVA RING-bom.csv      # JLCPCB bill of materials (source of truth)
 │   ├── BOM.md                  # Formatted BOM reference
+│   ├── SCHEMATIC_DECISIONS.md  # Locked decisions for the next PCB revision
 │   ├── gsr_wearable.kicad_sch  # KiCad schematic
 │   ├── gsr_wearable.kicad_pro  # KiCad project
 │   ├── Ring CAD.step           # 3D CAD model
@@ -107,6 +109,16 @@ Some design documents still reference parts from earlier board revisions. This R
 | LDO | MCP1700T-3302E (3.3V) | TLV70018DDCR (1.8V) |
 
 The JLCPCB BOM CSV (`hardware/NERVA RING-bom.csv`) lists MDBT50Q-1MV2 for the MCU slot, but the actual module used is the **MDBT42V** (nRF52832). The `SCHEMATIC_CHECKLIST.md`, `PCB_LAYOUT_STRATEGY.md`, and `GSR_CIRCUIT_INTEGRATION.md` have not yet been fully updated. The firmware docs in `firmware/gsr_heart_ble/` describe the XIAO nRF52840 prototyping setup, not the final ring hardware.
+
+## Next Revision (In Progress)
+
+Work is underway on the next PCB revision, replacing the LM324-based GSR
+circuit with an OPA2333 transimpedance amplifier and adding a BQ25120A PMIC
+for charging and power sequencing. None of this has been fabricated yet —
+it's schematic-stage only. See:
+
+* [`hardware/SCHEMATIC_DECISIONS.md`](hardware/SCHEMATIC_DECISIONS.md) — locked schematic decisions for the GSR front end, power management, sensor interrupts, and I2C bus.
+* [`firmware/POWER_MANAGEMENT.md`](firmware/POWER_MANAGEMENT.md) — mandatory BQ25120A boot sequence and I2C watchdog servicing.
 
 ## Getting Started
 
