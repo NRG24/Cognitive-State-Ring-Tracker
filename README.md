@@ -9,24 +9,88 @@ The NERVA Ring shifts the focus of wearable technology away from step-counting a
 ## Core Features
 
 * **Cognitive Focus:** Tailored strictly for mental wellness monitoring rather than physical fitness or gym tracking.
-* **Rigorous Hardware Validation:** Circuitry completely modeled, tested, and validated via LT-Spice to guarantee electrical correctness.
+* **Reviewed Hardware Design:** The v1 circuitry was modeled and validated in LT-Spice; the v2 netlist has been reviewed pin-by-pin against every device datasheet. No v2 board has been built or bench-validated yet.
 * **Ultra-Compact Layout:** All hardware components optimized to fit onto a highly constrained, circular flex PCB architecture.
 * **Wireless Telemetry:** Real-time, low-latency data streaming to mobile devices using Bluetooth Low Energy (BLE).
 * **Intelligent Software Pipeline:** Dynamic in-app data filtering to remove motion artifacts and anomalies, powering a custom algorithm that delivers a "Cognitive Score" out of 100 alongside meaningful behavioral insights.
 
 ## Hardware Architecture
 
-* **Microcontroller / RF:** Raytac MDBT42V (nRF52832) handling low-power processing and BLE transmission.
-* **Biometrics (PPG):** MAX30102 sensor capturing Heart Rate, Heart Rate Variability (HRV), Blood Oxygen Saturation (SpO2), and die temperature.
-* **Arousal Tracking (GSR):** LM324-based quad op-amp Galvanic Skin Response circuit (Grove GSR-compatible topology) to measure electrodermal activity and sympathetic nervous system activation.
-* **Motion Filtering:** LSM6DSR 6-axis IMU (accelerometer + gyroscope) dedicated to detecting and filtering out motion noise from raw biometric streams.
-* **Power Regulation:** TLV70018DDCR ultra-low-noise 1.8V LDO regulator.
-* **GSR Electrodes:** Custom pogo-pin electrodes for skin contact.
-* **Charging:** Two-pin magnetic pogo charger connector (Alibaba).
-* **Battery:** Curved LiPo cell (ring-form-factor).
-* **PCB:** 2-layer flex PCB with components on both sides, 0402/0201 passives, manufactured and assembled by JLCPCB.
+The current board is **NERVA Ring v2**, a complete part change from v1 — the MCU, both sensors, the op-amp, and the entire power path were replaced. Everything under `hardware/` and `firmware/` in this repo still describes the v1 board; see [Board Revisions](#board-revisions).
 
-> **Prototyping note:** The `firmware/` directory contains sketches for both the final ring hardware (MDBT42V / nRF52832) and the Seeed XIAO nRF52840 development board used during prototyping. The XIAO-based sketches (e.g. `gsr_heart_ble.ino`) use an external DS18B20 temperature sensor and standalone pulse/GSR sensor modules, while the ring PCB integrates the MAX30102 and a custom analog GSR circuit directly.
+### Core components
+
+| Role | Part | I²C address (7-bit) |
+|------|------|---------------------|
+| MCU / BLE | u-blox ANNA-B402-00B (nRF52833) | — |
+| PPG (HR / SpO2) | MAXM86161 | `0x62` (`0xC4`/`0xC5` 8-bit) |
+| IMU + die temperature | ST LSM6DSV | `0x6B` — SA0 tied to 1V8 |
+| PMIC / charger / fuel gauge | TI BQ25120A | `0x6A` (fixed) |
+| GSR analog front end | TI OPA2333 (dual op-amp) | — |
+| LED boost converter | TI TPS61240 (fixed 5 V) | — |
+
+All three I²C devices share a single bus. The IMU sits at **`0x6B`, not the ST default `0x6A`**: SA0 was originally grounded, which collided with the BQ25120A's fixed `0x6A`, so it was moved to the 1V8 rail.
+
+### Pin map
+
+**ANNA-B402 module pin numbers are not nRF GPIO numbers.** The `Pxx.yy` column is what firmware addresses.
+
+| Module pin | nRF port | Net | Notes |
+|---|---|---|---|
+| 9 | — | `1V8` (VCC) | SYS rail from the BQ25120A. Actually run at **1.9 V** (see Power); the net name is historical. |
+| 10 | **P0.20** | `SDA` | shared bus: IMU, PMIC, PPG |
+| 11 | **P0.14** | `SCL` | |
+| 13 | **P1.09** | `CD` | BQ25120A chip-disable (ball E2). Held low; strobed high only to reach the PMIC while running on battery. Reuses the pin freed by `LSCTRL`, which is now tied to GND in hardware. |
+| 14 | **P0.11** | `GSR_PWR` | analog supply gate — requires **high drive (H0H1)** |
+| 15 | **P0.12** | `BOOST_EN` | TPS61240 enable |
+| 17, 18 | P0.00, P0.01 | `GND` | XL1/XL2 grounded — **no 32.768 kHz crystal fitted** |
+| 19 | **P0.03** | `GSR_ADC` | **AIN1**, SAADC input |
+| 36 | **P0.16** | `ACC_INT` | LSM6DSV INT1 |
+| 41, 42 | — | SWDCLK / SWDIO | the only debug interface |
+
+There is **no UART and no USB** on this board — SWD is the only wired interface, so logging has to go over RTT rather than a serial port.
+
+Because XL1/XL2 are grounded, the low-frequency clock has to come from the internal RC oscillator. There is no crystal to select.
+
+### Power architecture
+
+* **BQ25120A** is charger, buck regulator, and fuel gauge in one part. It supplies the SYS rail feeding the ANNA module, both sensors, and the analog front end. There is no separate LDO and no 3.3 V rail — the 3V3 rail was deleted, nothing uses it, and the PMIC's load switch / LDO output stays off (`LSCTRL`, ball E3, is tied to GND).
+* **SYS runs at 1.9 V, not the 1.8 V default.** The default's −2.5 % corner is 1.755 V, which is below the OPA2333's 1.800 V minimum supply and only 55 mV above the ANNA's 1.70 V brown-out threshold. 1.9 V clears both, and costs nothing in GSR accuracy because the measurement is ratiometric — the rail cancels out.
+* **The TS (thermistor) pin, ball C3, is physically unroutable on this layout and floats.** With TS sensing active the charger faults and delivers no current, so `TS_EN` has to be cleared before the cell will charge at all.
+* Disabling TS also removes JEITA over-temperature protection from a lithium cell worn against skin, so charge-temperature limiting has to be reimplemented against the LSM6DSV die temperature and applied through the PMIC's `CE` bit.
+* **Battery percentage comes from the BQ25120A's VBMON.** The v1 board had no fuel gauge at all.
+* **TPS61240** generates the fixed 5 V VLED rail for the PPG, gated by `BOOST_EN`. It exists because of the green LED: VF is 3.0–3.8 V, against 2.1–2.5 V for red and 1.6–1.9 V for IR.
+* Battery capacity (mAh) is still an open decision — it sets the fast-charge current and any honest runtime estimate.
+
+### GSR front end
+
+* Excitation is gated by `GSR_PWR` (P0.11, high drive) so the analog section can be powered down between samples, saving roughly 37 µA.
+* Output lands on **AIN1 (P0.03)**. The SAADC is configured **reference VDD/4, gain 1/4**, so full scale equals VDD and the reading is ratiometric against the same rail that drives the excitation — supply drift cancels. The internal 0.6 V reference breaks that property.
+* **40 µs acquisition time** is required by the 100 kΩ source impedance of R6.
+* The C10/R6 filter has a ~100 ms time constant; allow ~300 ms after powering the front end before the first valid sample.
+* Sampling must stay at **≥10 Hz** — skin-conductance responses peak ~1.4 s after onset, which is ~14 samples across the rise at 10 Hz but only ~3 at 2 Hz.
+* Nominal conversion, 12-bit (0–4095): `G[µS] ≈ code × 0.009692 − 10.989`. Derived from nominal resistor values, so it needs trimming against a known resistance.
+
+### PPG front end
+
+* The MAXM86161 is powered **entirely from the 5 V VLED rail**. It is single-supply with an internal LDO, so taking `BOOST_EN` low unpowers the part completely and resets every register — a full re-init is required on each duty cycle.
+* **Its interrupt pin is deliberately left unconnected**; the FIFO has to be polled.
+* The I²C bus runs at 1.8 V and the MAXM86161 needs VIH ≥ 1.4 V, so no level shifter is required despite the 5 V VLED.
+* **LED current range is a power-path constraint.** At the 124 mA range the boost pulls ~186 mA from the cell; on a small ring LiPo (~3 Ω internal resistance) that is ~560 mV of droop and starts crowding the BQ25120A's UVLO. The 31 mA range draws ~45 mA, about 135 mV of droop.
+
+### IMU
+
+* LSM6DSV at `0x6B`, with INT1 wired to P0.16.
+* It is **not** an LSM6DS3 — different `WHO_AM_I` and different ODR / full-scale register encodings, so v1 register values do not carry the same meaning.
+* Embedded temperature sensor at `OUT_TEMP_L/H` (0x20/0x21), 256 LSB/°C with 0 LSB = 25 °C. This is the die temperature used for the software charge-temperature limiting described above.
+
+### Bring-up notes
+
+* **A board with no firmware will not charge.** TS floats until firmware disables it, so first power-up has to be over SWD from a partially charged cell rather than "plug it in and wait." The symptom looks exactly like a dead board.
+* SWD (module pins 41/42) is the only way in — no UART, no USB, RTT for logs.
+* This description is derived from the v2 netlist and the four device datasheets. **No v2 hardware existed when it was captured**, so pin assignments have not been confirmed against a working board and the GSR constant above is theoretical.
+
+> **Prototyping note:** The `firmware/` directory contains sketches for the v1 ring hardware (MDBT42V / nRF52832) and for the Seeed XIAO nRF52840 development board used during prototyping. The XIAO sketches (e.g. `gsr_heart_ble.ino`) use an external DS18B20 temperature sensor and standalone pulse/GSR modules, while the v1 ring PCB integrates the MAX30102 and a custom analog GSR circuit directly. Neither applies to the v2 board.
 
 ## Project Structure
 
@@ -49,9 +113,9 @@ NERVA_Ring/
 │   │   └── *.ino              # Variant sketches (power-optimized, all-features, etc.)
 │   ├── simple_ble/             # Minimal BLE test
 │   └── *.ino                  # Standalone test sketches
-├── hardware/                   # Hardware design files
-│   ├── NERVA RING-bom.csv      # JLCPCB bill of materials (source of truth)
-│   ├── BOM.md                  # Formatted BOM reference
+├── hardware/                   # Hardware design files (v1 board)
+│   ├── NERVA RING-bom.csv      # JLCPCB bill of materials (v1)
+│   ├── BOM.md                  # Formatted BOM reference (v1)
 │   ├── gsr_wearable.kicad_sch  # KiCad schematic
 │   ├── gsr_wearable.kicad_pro  # KiCad project
 │   ├── Ring CAD.step           # 3D CAD model
@@ -70,43 +134,56 @@ NERVA_Ring/
 
 ## Bill of Materials (Summary)
 
-See [`hardware/BOM.md`](hardware/BOM.md) for the complete, formatted BOM. See [`hardware/NERVA RING-bom.csv`](hardware/NERVA%20RING-bom.csv) for the raw JLCPCB export.
+Active components on the **v2** board:
 
-| Component | Part | Package | Qty |
-|-----------|------|---------|-----|
-| MCU / BLE | Raytac MDBT42V (nRF52832) | SMD Module | 1 |
-| PPG Sensor | MAX30102EFD+T | OESIP-14 | 1 |
-| IMU | LSM6DSRTR (LSM6DSR) | LGA-14 | 1 |
-| GSR Op-Amp | LM324PWR | TSSOP-14 | 1 |
-| LDO Regulator | TLV70018DDCR | SOT-23-5 | 1 |
-| GSR Electrodes | Custom pogo pins | — | 2 |
-| Charger Connector | 2-pin magnetic pogo | — | 1 |
-| Battery | Curved ring-type LiPo | Custom | 1 |
+| Component | Part | Qty |
+|-----------|------|-----|
+| MCU / BLE module | ANNA-B402-00B (u-blox, nRF52833) | 1 |
+| PPG sensor | MAXM86161 | 1 |
+| IMU | LSM6DSV | 1 |
+| PMIC / charger / fuel gauge | BQ25120A | 1 |
+| GSR op-amp | OPA2333 (dual) | 1 |
+| LED boost converter | TPS61240 (fixed 5 V) | 1 |
+| Battery | Curved ring-type LiPo — capacity TBD | 1 |
+
+> The BOM files in this repo — [`hardware/BOM.md`](hardware/BOM.md) and the raw JLCPCB export [`hardware/NERVA RING-bom.csv`](hardware/NERVA%20RING-bom.csv) — are the **v1** build, including passives, costs and LCSC part numbers. A v2 BOM has not been generated.
 
 ## Sensors & Data Streams
 
-| Metric | Sensor | BLE UUID (suffix) | Type |
-|--------|--------|--------------------|------|
-| GSR (Skin Conductance) | Analog circuit → ADC | `...0002` | Int |
-| Heart Rate | MAX30102 PPG | `...0003` | Int |
-| Temperature | MAX30102 die temp | `...0004` | Float |
+| Metric | Sensor (v2) | BLE UUID (suffix) | Type |
+|--------|-------------|--------------------|------|
+| GSR (Skin Conductance) | OPA2333 front end → SAADC AIN1 | `...0002` | Int |
+| Heart Rate | MAXM86161 PPG | `...0003` | Int |
+| Temperature | LSM6DSV die temp | `...0004` | Float |
 | HRV (RMSSD) | Derived from PPG | `...0005` | Float |
-| SpO2 | MAX30102 PPG | `...0006` | Int |
-| Battery Level | Voltage divider → ADC | `...0007` | Int |
+| SpO2 | MAXM86161 PPG | `...0006` | Int |
+| Battery Level | BQ25120A VBMON | `...0007` | Int |
 
 **BLE Service UUID:** `19B10000-E8F2-537E-4F6C-D104768A1214`
 
-## Known Documentation Inconsistencies
+The v2 IMU also makes raw accelerometer and gyroscope streams available. UUIDs and payload types above describe the app currently in `app/`; the BLE characteristic set is firmware/app scope and is not covered by this hardware pass.
 
-Some design documents still reference parts from earlier board revisions. This README reflects the actual current hardware. Key differences in older docs:
+## Board Revisions
 
-| What | Stale Docs Say | Actual (Current PCB) |
-|------|----------------|----------------------|
-| IMU | LSM6DS3 | LSM6DSR (LSM6DSRTR) |
-| Op-Amp | TLV9004 (UQFN-14) | LM324PWR (TSSOP-14) |
-| LDO | MCP1700T-3302E (3.3V) | TLV70018DDCR (1.8V) |
+Every design file in `hardware/` and every sketch in `firmware/` describes the **v1** board. v2 replaced all of it:
 
-The JLCPCB BOM CSV (`hardware/NERVA RING-bom.csv`) lists MDBT50Q-1MV2 for the MCU slot, but the actual module used is the **MDBT42V** (nRF52832). The `SCHEMATIC_CHECKLIST.md`, `PCB_LAYOUT_STRATEGY.md`, and `GSR_CIRCUIT_INTEGRATION.md` have not yet been fully updated. The firmware docs in `firmware/gsr_heart_ble/` describe the XIAO nRF52840 prototyping setup, not the final ring hardware.
+| Role | v1 | v2 (current) |
+|------|----|--------------|
+| MCU / BLE | Raytac MDBT42V (nRF52832) | u-blox ANNA-B402-00B (nRF52833) |
+| PPG | MAX30102 | MAXM86161 |
+| IMU | LSM6DSR (LSM6DSRTR) | LSM6DSV |
+| GSR op-amp | LM324PWR (quad) | OPA2333 (dual) |
+| Power | TLV70018DDCR 1.8 V LDO | BQ25120A PMIC (charger + buck + fuel gauge) |
+| LED supply | — | TPS61240 fixed 5 V boost |
+| Temperature source | MAX30102 die temp | LSM6DSV die temp |
+| Battery monitoring | none | BQ25120A VBMON |
+
+Consequences worth knowing:
+
+* The KiCad project, Gerbers, BOM, and all layout/schematic notes under `hardware/` are v1 and have not been regenerated.
+* v1 firmware does not port to v2. Beyond the sensor changes, the Adafruit nRF52 Arduino core supports nRF52832/nRF52840 only, while the ANNA-B402 is an nRF52833.
+
+**Within the v1 documents themselves**, several files still reference even earlier parts: `SCHEMATIC_CHECKLIST.md`, `PCB_LAYOUT_STRATEGY.md`, and `GSR_CIRCUIT_INTEGRATION.md` mention LSM6DS3, TLV9004 (UQFN-14), and a 3.3 V MCP1700T-3302E LDO, and the JLCPCB BOM CSV lists MDBT50Q-1MV2 in the MCU slot rather than the MDBT42V actually fitted. `hardware/BOM.md` tracks that list. The firmware docs in `firmware/gsr_heart_ble/` describe the XIAO nRF52840 prototyping setup, not a ring board of either revision.
 
 ## Getting Started
 
@@ -124,7 +201,9 @@ flutter run
 4. Upload `firmware/gsr_heart_ble/gsr_complete_all_features.ino`
 
 ### Hardware
-KiCad project files are in `hardware/`. The PCB is a 2-layer flex design assembled by JLCPCB.
+The KiCad project, Gerbers, and BOM in `hardware/` are the **v1** board: a 2-layer flex design with components on both sides, 0402/0201 passives, assembled by JLCPCB. v2 design files are not in this repo — the v2 description above comes from its netlist and datasheet review.
+
+Bringing up a v2 board: attach a debug probe to SWD (module pins 41/42) and power it from a partially charged cell. **A fresh board will not charge on its own** — the floating TS pin holds the BQ25120A off until firmware clears `TS_EN`.
 
 ---
 
