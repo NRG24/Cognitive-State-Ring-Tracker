@@ -35,18 +35,6 @@ All three I²C devices share a single bus. The IMU sits at **`0x6B`, not the ST 
 
 **ANNA-B402 module pin numbers are not nRF GPIO numbers.** The `Pxx.yy` column is what firmware addresses.
 
-| Module pin | nRF port | Net | Notes |
-|---|---|---|---|
-| 9 | — | `1V8` (VCC) | SYS rail from the BQ25120A. Actually run at **1.9 V** (see Power); the net name is historical. |
-| 10 | **P0.20** | `SDA` | shared bus: IMU, PMIC, PPG |
-| 11 | **P0.14** | `SCL` | |
-| 13 | **P1.09** | `CD` | BQ25120A chip-disable (ball E2). Held low; strobed high only to reach the PMIC while running on battery. Reuses the pin freed by `LSCTRL`, which is now tied to GND in hardware. |
-| 14 | **P0.11** | `GSR_PWR` | analog supply gate — requires **high drive (H0H1)** |
-| 15 | **P0.12** | `BOOST_EN` | TPS61240 enable |
-| 17, 18 | P0.00, P0.01 | `GND` | XL1/XL2 grounded — **no 32.768 kHz crystal fitted** |
-| 19 | **P0.03** | `GSR_ADC` | **AIN1**, SAADC input |
-| 36 | **P0.16** | `ACC_INT` | LSM6DSV INT1 |
-| 41, 42 | — | SWDCLK / SWDIO | the only debug interface |
 
 There is **no UART and no USB** on this board — SWD is the only wired interface, so logging has to go over RTT rather than a serial port.
 
@@ -84,15 +72,7 @@ Because XL1/XL2 are grounded, the low-frequency clock has to come from the inter
 * It is **not** an LSM6DS3 — different `WHO_AM_I` and different ODR / full-scale register encodings, so v1 register values do not carry the same meaning.
 * Embedded temperature sensor at `OUT_TEMP_L/H` (0x20/0x21), 256 LSB/°C with 0 LSB = 25 °C. This is the die temperature used for the software charge-temperature limiting described above.
 
-### Bring-up notes
 
-* **A board with no firmware will not charge.** TS floats until firmware disables it, so first power-up has to be over SWD from a partially charged cell rather than "plug it in and wait." The symptom looks exactly like a dead board.
-* SWD (module pins 41/42) is the only way in — no UART, no USB, RTT for logs.
-* This description is derived from the v2 netlist and the four device datasheets. **No v2 hardware existed when it was captured**, so pin assignments have not been confirmed against a working board and the GSR constant above is theoretical.
-
-> **Prototyping note:** The `firmware/` directory contains sketches for the v1 ring hardware (MDBT42V / nRF52832) and for the Seeed XIAO nRF52840 development board used during prototyping. The XIAO sketches (e.g. `gsr_heart_ble.ino`) use an external DS18B20 temperature sensor and standalone pulse/GSR modules, while the v1 ring PCB integrates the MAX30102 and a custom analog GSR circuit directly. Neither applies to the v2 board.
-
-## Project Structure
 
 ```
 NERVA_Ring/
@@ -211,11 +191,9 @@ https://github.com/user-attachments/assets/21d7508c-1ee5-49b8-9717-f8bbbc1bc319
 
 <img width="1526" height="1260" alt="image" src="https://github.com/user-attachments/assets/9e2d3639-5bc1-4c2b-b5d9-fed1e8b23c1c" />
 
-<img width="1280" height="1024" alt="image" src="https://github.com/user-attachments/assets/bb193762-28db-4391-b3c4-8594ef432642" />
 
-<img width="436" height="368" alt="Screenshot 2026-02-07 at 9 29 02 PM" src="https://github.com/user-attachments/assets/2e2c0f2e-898e-42cc-9a81-37765b89f813" />
-<br>
+<img width="403" height="397" alt="Screenshot 2026-08-25 004724" src="https://github.com/user-attachments/assets/df2bb9ed-6409-4a62-90d9-9fb8bdcfb27c" />
+<img width="610" height="432" alt="Screenshot 2026-08-25 004632" src="https://github.com/user-attachments/assets/f83ff3af-5dcd-4694-9f5e-6b3734bc1ae0" />
+<img width="1257" height="372" alt="image" src="https://github.com/user-attachments/assets/cbb06c4a-c7b0-47b7-81d3-aa73f95ad57c" />
 
-<img width="1077" height="370" alt="Screenshot 2026-03-21 at 9 27 09 PM" src="https://github.com/user-attachments/assets/76b5d239-362e-46cb-b721-c6f8a9353247" />
-<img width="718" height="494" alt="Screenshot 2026-02-11 at 9 21 46 PM" src="https://github.com/user-attachments/assets/ed82f334-0ea8-4d68-94f6-a0611016e22b" />
-<img width="1101" height="417" alt="Screenshot 2026-03-21 at 9 28 39 PM" src="https://github.com/user-attachments/assets/bfdef878-dc1f-4e6c-975c-ed55c9a32da5" />
+
